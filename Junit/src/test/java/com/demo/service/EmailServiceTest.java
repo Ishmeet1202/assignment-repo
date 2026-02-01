@@ -50,6 +50,6 @@ public class EmailServiceTest {
     public void testSendEmail_withNullOrder_shouldThrowIllegalArgumentException() {
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> emailService.sendEmail(null, "cc@test.com"));
 
-        assertEquals("Order cannot be null", ex.getMessage());
+        assertEquals("Order cannot be null.", ex.getMessage());
     }
 }
