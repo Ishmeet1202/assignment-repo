@@ -1,0 +1,13 @@
+package com.springframework.spring_exercise.Question2;
+
+public class Car {
+    private Engine engine;
+
+    public Car(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void drive() {
+        engine.start();
+    }
+}
