@@ -20,7 +20,7 @@ public class HelloController {
         this.messageSource = messageSource;
     }
 
-    @GetMapping("/hello")
+    @GetMapping("/hi")
     public String sayGoodMorning() {
 
         Locale locale = LocaleContextHolder.getLocale();
@@ -31,7 +31,7 @@ public class HelloController {
                 locale
         );
     }
-    @GetMapping("/hi")
+    @GetMapping("/good-morning")
     public String sayHi(@RequestParam(defaultValue = "User") String username) {
 
         Locale locale = LocaleContextHolder.getLocale();
