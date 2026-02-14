@@ -18,6 +18,11 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @GetMapping("/")
+    public String welcome() {
+        return "Welcome to Spring Boot";
+    }
+
     @GetMapping("/employees")
     public List<Employee> retrieveAllEmployees() {
         return employeeService.retrieveAllEmployees();
