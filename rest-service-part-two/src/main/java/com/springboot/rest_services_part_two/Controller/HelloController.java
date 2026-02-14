@@ -13,8 +13,12 @@ import java.util.Locale;
 @RestController
 public class HelloController {
 
-    @Autowired
     private MessageSource messageSource;
+
+    @Autowired
+    public HelloController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @GetMapping("/hello")
     public String sayGoodMorning() {
@@ -38,11 +42,5 @@ public class HelloController {
                 locale
         );
     }
-//     Multiple parameters
-//    welcome.message=Hello {0}, your age is {1}
-//    Controller: new Object[]{"Himanshu", 22}
-//
-//    Output:
-//    Hello Himanshu, your age is 22
 }
 

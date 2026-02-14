@@ -2,6 +2,7 @@ package com.springboot.rest_services_part_two.Controller;
 
 
 import com.springboot.rest_services_part_two.Model.User;
+import com.springboot.rest_services_part_two.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,11 @@ import java.util.*;
 @Tag(name = "Swagger Controller", description = "APIs for managing users")
 public class SwaggerController {
 
-    List<User> users = new ArrayList<>();
+    private UserRepository repository;
+
+    public SwaggerController(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Operation(
             summary = "Get all users",
@@ -21,7 +26,7 @@ public class SwaggerController {
     )
     @GetMapping
     public List<User> getUsers() {
-        return users;
+        return repository.findAll();
     }
 
     @Operation(
@@ -30,8 +35,7 @@ public class SwaggerController {
     )
     @PostMapping
     public User createUser(@RequestBody User user) {
-        users.add(user);
-        return user;
+        return repository.save(user);
     }
 
     @Operation(
@@ -39,8 +43,8 @@ public class SwaggerController {
             description = "Deletes user by ID"
     )
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable int id) {
-        users.removeIf(u -> u.getId() == id);
+    public String deleteUser(@PathVariable Integer id) {
+        repository.deleteById(id);
         return "User deleted";
     }
 }

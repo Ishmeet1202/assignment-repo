@@ -1,6 +1,8 @@
 package com.springboot.rest_services_part_two.Controller;
 
 import com.springboot.rest_services_part_two.Model.User;
+import com.springboot.rest_services_part_two.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,22 +13,19 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @RestController
 public class HateoasController {
 
-    List<User> users = new ArrayList<>();
+    private UserRepository repository;
 
-    public HateoasController() {
-        users.add(new User(1,"Himanshu","h@gmail.com",""));
-        users.add(new User(2,"Rohit","r@gmail.com",""));
+    @Autowired
+    public HateoasController(UserRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping("/Husers/{id}")
-    public EntityModel<User> getUser(@PathVariable int id) {
+    public EntityModel<User> getUser(@PathVariable Integer id) {
 
-        User user = users.stream()
-                .filter(u -> u.getId() == id)
-                .findFirst()
-                .orElseThrow();
+        Optional<User> user = repository.findById(id);
 
-        EntityModel<User> resource = EntityModel.of(user);
+        EntityModel<User> resource = EntityModel.of(user.get());
 
         resource.add(linkTo(methodOn(HateoasController.class)
                 .getAllUsers()).withRel("all-users"));
@@ -34,6 +33,6 @@ public class HateoasController {
     }
     @GetMapping("/Husers")
     public List<User> getAllUsers() {
-        return users;
+        return repository.findAll();
     }
 }

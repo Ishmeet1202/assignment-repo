@@ -15,7 +15,7 @@ public class EmployeeRepository {
     static {
         employees.add(new Employee(++count, "Dushi", 23));
         employees.add(new Employee(++count, "Shashwat", 22));
-        employees.add(new Employee(++count, "Himanshu", 22));
+        employees.add(new Employee(++count, "Rahul", 22));
     }
 
     public void save(Employee employee) {

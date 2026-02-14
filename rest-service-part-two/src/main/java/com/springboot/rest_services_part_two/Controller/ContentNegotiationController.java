@@ -2,6 +2,8 @@ package com.springboot.rest_services_part_two.Controller;
 
 
 import com.springboot.rest_services_part_two.Model.User;
+import com.springboot.rest_services_part_two.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,16 +13,20 @@ import java.util.List;
 @RequestMapping("/users")
 public class ContentNegotiationController {
 
-    List<User> users = new ArrayList<>();
+    private UserRepository repository;
+
+    @Autowired
+    public ContentNegotiationController(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @PostMapping()
     public User createUser(@RequestBody User user) {
-        users.add(user);
-        return user;
+        return repository.save(user);
     }
 
     @GetMapping()
     public List<User> getUsers() {
-        return users;
+        return repository.findAll();
     }
 }
