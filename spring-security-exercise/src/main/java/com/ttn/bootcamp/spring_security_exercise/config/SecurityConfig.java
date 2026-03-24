@@ -41,7 +41,6 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // this is filter from it Authorization Rule Check happen
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -61,7 +60,6 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 
-                        // everything else requires login
                         .anyRequest().authenticated()
                 )
 
