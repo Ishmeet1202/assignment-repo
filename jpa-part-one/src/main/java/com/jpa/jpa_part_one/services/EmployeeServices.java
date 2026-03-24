@@ -1,5 +1,6 @@
 package com.jpa.jpa_part_one.services;
 
+import com.jpa.jpa_part_one.exceptions.NoEmployeeFoundException;
 import com.jpa.jpa_part_one.models.Employee;
 import com.jpa.jpa_part_one.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class EmployeeServices {
 
     public Employee update(Integer id, Employee employee) {
         Optional<Employee> optional = employeeRepository.findById(id);
+        if (optional.isEmpty()) {
+            throw new NoEmployeeFoundException("Employee with this "+id+" doesn't exists.");
+        }
         Employee oldEmployee = optional.get();
         oldEmployee.setName(employee.getName());
         oldEmployee.setAge(employee.getAge());
@@ -35,17 +39,21 @@ public class EmployeeServices {
 
     public void delete(Integer id) {
         Optional<Employee> optional = employeeRepository.findById(id);
-        if (optional.isPresent()) {
-            employeeRepository.deleteById(id);
+        if (optional.isEmpty()) {
+            throw new NoEmployeeFoundException("Employee with this "+id+" doesn't exists.");
         }
+        employeeRepository.deleteById(id);
     }
 
     public Employee getEmployee(Integer id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        if (optionalEmployee.isEmpty()) {
+            throw new NoEmployeeFoundException("Employee with this "+id+" doesn't exists.");
+        }
         return optionalEmployee.get();
     }
 
-    public List<Employee> getALlEmployees(Integer pageNo, Integer pageSize) {
+    public List<Employee> getEmployeesByPage(Integer pageNo, Integer pageSize) {
         Sort sort = Sort.by(Sort.Direction.ASC, "age");
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         return employeeRepository.findAll(pageable).getContent();

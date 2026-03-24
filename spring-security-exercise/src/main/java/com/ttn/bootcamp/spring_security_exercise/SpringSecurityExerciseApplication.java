@@ -1,12 +1,13 @@
-package com.jpa.jpa_part_one;
+package com.ttn.bootcamp.spring_security_exercise;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JpaPartOneApplication {
+public class SpringSecurityExerciseApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(JpaPartOneApplication.class, args);
+        SpringApplication.run(SpringSecurityExerciseApplication.class, args);
     }
+
 }

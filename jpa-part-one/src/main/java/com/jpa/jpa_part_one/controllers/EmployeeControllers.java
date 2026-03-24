@@ -44,8 +44,8 @@ public class EmployeeControllers {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Employee>> getAllEmployee(@RequestParam Integer pageNo, @RequestParam Integer pageSize) {
-        List<Employee> employees = employeeServices.getALlEmployees(pageNo, pageSize);
+    public ResponseEntity<List<Employee>> getEmployeeByPage(@RequestParam Integer pageNo, @RequestParam Integer pageSize) {
+        List<Employee> employees = employeeServices.getEmployeesByPage(pageNo, pageSize);
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
